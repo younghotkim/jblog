@@ -6,7 +6,7 @@
 	<!-- 로그인용 -->
 	<select id="selectUser" parameterType="com.javaex.vo.UserVo" resultType="com.javaex.vo.UserVo">
 		<![CDATA[
-			select userNo, userName
+			select id, userNo, userName
 			from users
 			where id= #{id}
 			and password= #{password}

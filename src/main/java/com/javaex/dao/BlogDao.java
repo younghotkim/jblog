@@ -26,9 +26,15 @@ public class BlogDao {
 		
 		System.out.println("[BlogDao.getBlog()]");
 		
-		System.out.println("DAO: " + id);
-		
 		return sqlSession.selectOne("blog.selectBlog", id);
+		
+	}
+	
+	public int updateBlog(Map<String, Object> blogMap) {
+		
+		System.out.println("[BlogDao.updateBlog()]");
+		
+		return sqlSession.update("blog.updateBlog", blogMap);
 		
 	}
 	

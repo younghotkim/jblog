@@ -13,7 +13,7 @@
 			        )
 		]]>
 	</insert>
-	
+
 	<!-- 블로그 불러오기 -->
 	<select id="selectBlog" parameterType="String" resultType="com.javaex.vo.BlogVo">
 		<![CDATA[
@@ -26,5 +26,34 @@
 		AND b.id = #{id}
 		  		]]>
 	</select>
+
+	<!-- 블로그생성용 -->
+	<update id="updateBlog" parameterType="map">
+	
+		<![CDATA[
+		
+		UPDATE blog 
+		SET blogTitle = #{blogTitle},
+		
+				]]>
+
+		<if test="#{logoFile} != null">
+		
+				<![CDATA[
+
+			logoFile = #{logoFile}
+		
+				]]>
+
+		</if>
+		
+				<![CDATA[
+
+		WHERE id = #{id}
+		
+				]]>
+
+
+	</update>
 
 </mapper>
