@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="category">
+
+	<!-- 카테고리 리스트 -->
+	<select id="selectList" parameterType="String" resultType="com.javaex.CategoryVo">
+		<![CDATA[
+			SELECT cataNo,
+			       cateName,
+			       description
+			FROM category
+			WHERE id = #{id}
+			ORDER BY regDate DESC
+		]]>
+	</select>
+
+</mapper>

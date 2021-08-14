@@ -41,30 +41,21 @@
 						<tr>
 							<td><label>로고이미지</label></td>
 
-							<td class="text-left"><c:choose>
-
-									<c:when test="${blogVo.logoFile eq 'spring-logo.jpg' }">
-									
-									<img src="${pageContext.request.contextPath}/assets/images/spring-logo.jpg">
-									
-									</c:when>
-									
-									<c:otherwise>
-									
-									<img src="${pageContext.request.contextPath}/assets/images/${blogVo.logoFile}">
-									
-									</c:otherwise>
-
-
-								</c:choose></td>
-
+							<c:choose>
+								<c:when test="${ empty blogVo.logoFile}">
+									<td class="text-left"><img src="${pageContext.request.contextPath}/assets/images/spring-logo.jpg"></td>
+								</c:when>
+								<c:otherwise>
+									<td class="text-left"><img src="${pageContext.request.contextPath }/upload/${blogVo.logoFile}"></td>
+								</c:otherwise>
+							</c:choose>
 						</tr>
 
 
 
 						<tr>
 							<td>&nbsp;</td>
-							<td><input id="textLogo" type="file" name="file"></td>
+							<td><input id="textLogo" type="file" name="logoFile"></td>
 						</tr>
 					</table>
 					<div id="btnArea">

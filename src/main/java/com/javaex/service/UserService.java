@@ -28,7 +28,7 @@ public class UserService {
 		
 		blogMap.put("id", userVo.getId());
 		blogMap.put("blogTitle", userVo.getUserName()+"의 블로그입니다.");
-		blogMap.put("logoFile", "/assets/images/spring-logo.jpg");
+		blogMap.put("logoFile", "");
 		
 		blogDao.insertBlog(blogMap);
 

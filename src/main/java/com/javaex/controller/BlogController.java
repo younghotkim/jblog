@@ -1,5 +1,7 @@
 package com.javaex.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.service.BlogService;
 import com.javaex.vo.BlogVo;
+import com.javaex.vo.CategoryVo;
 
 @Controller
 public class BlogController {
@@ -53,15 +56,50 @@ public class BlogController {
 	//////////////////////// MODIFY////////////////////////
 	@RequestMapping(value = "/{id}/admin/modify", method = { RequestMethod.GET, RequestMethod.POST })
 	public String blogModify(@PathVariable("id") String id, @RequestParam("blogTitle") String blogTitle,
-			MultipartFile file, Model model) {
+			@RequestParam("logoFile") MultipartFile logoFile) {
 
 		System.out.println("[BlogController.blogModify()]");
 
-		int count = blogService.modifyBlog(id, blogTitle, file);
-		
+		int count = blogService.modifyBlog(id, blogTitle, logoFile);
+
 		System.out.println(count + "건 수정완료");
 
 		return "redirect:/{id}/admin/basic";
+
+	}
+
+	//////////////////////// WRITE////////////////////////
+	@RequestMapping(value = "/{id}/admin/write", method = { RequestMethod.GET, RequestMethod.POST })
+	public String blogWrite(@PathVariable("id") String id, Model model) {
+
+		System.out.println("[BlogController.blogWrite()]");
+
+		BlogVo blogVo = blogService.getBlog(id);
+
+		System.out.println(blogVo);
+
+		model.addAttribute("blogVo", blogVo);
+
+		return "blog/admin/blog-admin-write";
+
+	}
+	
+	//////////////////////// CATEGORY////////////////////////
+	@RequestMapping(value = "/{id}/admin/category", method = { RequestMethod.GET, RequestMethod.POST })
+	public String blogCategory(@PathVariable("id") String id, Model model) {
+
+		System.out.println("[BlogController.blogCategory()]");
+
+		BlogVo blogVo = blogService.getBlog(id);
+		
+		List<CategoryVo> categoryList = blogService.getList(id);
+		
+		System.out.println(blogVo);
+
+		model.addAttribute("blogVo", blogVo);
+		model.addAttribute("categoryList", categoryList);
+
+		return "blog/admin/blog-admin-cate";
 
 	}
 
