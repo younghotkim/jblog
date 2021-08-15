@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.service.BlogService;
+import com.javaex.service.CategoryService;
 import com.javaex.vo.BlogVo;
 import com.javaex.vo.CategoryVo;
 
@@ -20,6 +21,9 @@ public class BlogController {
 
 	@Autowired
 	private BlogService blogService;
+	
+	@Autowired
+	private CategoryService categoryService;
 
 	//////////////////////// BLOG////////////////////////
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET, RequestMethod.POST })
@@ -69,16 +73,17 @@ public class BlogController {
 	}
 
 	//////////////////////// WRITE////////////////////////
-	@RequestMapping(value = "/{id}/admin/write", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/{id}/admin/writeForm", method = { RequestMethod.GET, RequestMethod.POST })
 	public String blogWrite(@PathVariable("id") String id, Model model) {
 
 		System.out.println("[BlogController.blogWrite()]");
 
 		BlogVo blogVo = blogService.getBlog(id);
 
-		System.out.println(blogVo);
+		List<CategoryVo> categoryList = categoryService.getList(id);
 
 		model.addAttribute("blogVo", blogVo);
+		model.addAttribute("categoryList", categoryList);
 
 		return "blog/admin/blog-admin-write";
 
@@ -91,16 +96,13 @@ public class BlogController {
 		System.out.println("[BlogController.blogCategory()]");
 
 		BlogVo blogVo = blogService.getBlog(id);
-		
-		List<CategoryVo> categoryList = blogService.getList(id);
-		
+	
 		System.out.println(blogVo);
 
 		model.addAttribute("blogVo", blogVo);
-		model.addAttribute("categoryList", categoryList);
 
 		return "blog/admin/blog-admin-cate";
 
 	}
-
+	
 }

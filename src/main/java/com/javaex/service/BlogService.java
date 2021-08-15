@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -14,17 +13,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.dao.BlogDao;
-import com.javaex.dao.CategoryDao;
 import com.javaex.vo.BlogVo;
-import com.javaex.vo.CategoryVo;
 
 @Service
 public class BlogService {
 
 	@Autowired
 	private BlogDao blogDao;
-	@Autowired
-	private CategoryDao categoryDao;
 
 	public BlogVo getBlog(String id) {
 
@@ -78,14 +73,6 @@ public class BlogService {
 
 		}
 
-	}
-	
-	public List<CategoryVo> getList(String id) {
-		
-		System.out.println("[BlogService.getList()]");
-		
-		return categoryDao.selectList(id);
-		
 	}
 
 }

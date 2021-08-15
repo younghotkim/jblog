@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="post">
+	
+	<!-- 포스트 저장 -->
+	<insert id="insertPost" parameterType="com.javaex.vo.PostVo">
+		<![CDATA[
+		
+		INSERT INTO post
+		VALUES ( seq_post_no.NEXTVAL,
+				#{cateNo},
+				#{postTitle},
+				#{postContent},
+			    sysdate 
+			    ) 
+		]]>
+	</insert>
+	
+	<!-- 포스트 목록 -->
+	<select id="selectPostList" parameterType="int" resultType="com.javaex.vo.PostVo">
+		<![CDATA[
+		
+			SELECT postNo,
+				   cateNo,
+			       postTitle,
+			       regDate
+			FROM post
+			WHERE cateNo = #{cateNo}
+			ORDER BY regDate DESC
+		]]>
+	</select>
+	
+	<!--최근 포스트 -->
+	<select id="selectCrtPost" parameterType="int" resultType="com.javaex.vo.PostVo">
+		<![CDATA[
+		
+			SELECT p.postNo,
+			       p.postTitle,
+			       p.postContent,
+   			       p.regDate,
+   			       uc.userName,
+   			       uc.id
+			FROM post p,
+			     (SELECT c.cateNo,
+			     		 u.userName,
+			     		 u.id
+			      FROM users u, category c
+			      WHERE u.id = c.id) uc
+			WHERE p.cateNo = uc.cateNo
+			  AND p.cateNo = #{cateNo}
+			  AND p.regDate = (SELECT MAX(regDate)
+			                    FROM  post
+			                    WHERE cateNo = #{cateNo})
+		]]>
+	</select>
+	
+	
+	
+	<!-- 선택한 포스트 -->
+	<select id="selectPostByNo" parameterType="int" resultType="com.javaex.vo.PostVo">
+		<![CDATA[
+		
+			SELECT p.postNo,
+			       p.postTitle,
+			       p.postContent,
+   			       p.regDate,
+   			       uc.userName,
+   			       uc.id
+			FROM post p,
+			     (SELECT c.cateNo,
+			     		 u.userName,
+			     		 u.id
+			      FROM users u, category c
+			      WHERE u.id = c.id) uc
+			WHERE p.cateNo = uc.cateNo
+			  AND p.postNo = #{postNo}
+			  
+		]]>
+	</select>
+
+
+</mapper>
