@@ -15,6 +15,7 @@ public class ApiPostController {
 	@Autowired
 	PostService postService;
 	
+	////////////////////////WRITE////////////////////////
 	@RequestMapping(value="/{id}/admin/write", method = {RequestMethod.GET, RequestMethod.POST})
 	public String write(@ModelAttribute PostVo postVo) {
 		
